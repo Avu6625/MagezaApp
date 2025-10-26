@@ -1,30 +1,43 @@
-setTimeout(() => {
-  document.getElementById('splash').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-}, 3000);
+document.addEventListener("DOMContentLoaded", () => {
+  const splash = document.getElementById("splash");
 
-function board(btn) {
-  const li = btn.parentElement;
-  btn.remove();
-  document.getElementById('onboard').appendChild(li);
-}
+  setTimeout(() => {
+    splash.style.opacity = 0;
+    setTimeout(() => splash.style.display = "none", 600);
+  }, 3000);
 
-let icon = document.querySelector(".menu_icon");
+  const menuBtn = document.querySelector(".menu-btn");
+  const nav = document.querySelector("nav");
+  const lines = menuBtn.querySelectorAll(".line");
+  const navLinks = document.querySelector(".nav-links");
 
-icon.addEventListener("click", () => {
-  icon.classList.toggle("clicked");
+  menuBtn.addEventListener("click", () => {
+    nav.classList.toggle("nav-open");
+    navLinks.classList.toggle("fade-in");
+
+    lines[0].classList.toggle("line-cross");
+    lines[1].classList.toggle("line-fade-out");
+    lines[2].classList.toggle("line-cross");
+  });
+
+  const registerForm = document.getElementById("registerr-Form");
+  const errorMsg = document.getElementById("errorMessage");
+
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const contact = document.getElementById("contacts").value.trim();
+    const role = document.getElementById("registering-candidate").value;
+
+    if (!name || !contact || !role) {
+      errorMsg.textContent = "Please complete all fields.";
+      errorMsg.style.color = "red";
+      return;
+    }
+    errorMsg.textContent = "Registration successful!";
+    errorMsg.style.color = "green";
+
+    registerForm.reset();
+  });
 });
-
-var menuBtn = document.querySelector('.menu-btn');
-var nav = document.querySelector('nav');
-var lineOne = document.querySelector('nav .menu-btn .line--1');
-var lineTwo = document.querySelector('nav .menu-btn .line--2');
-var lineThree = document.querySelector('nav .menu-btn .line--3');
-var link = document.querySelector('nav .nav-links');
-menuBtn.addEventListener('click', () => {
-    nav.classList.toggle('nav-open');
-    lineOne.classList.toggle('line-cross');
-    lineTwo.classList.toggle('line-fade-out');
-    lineThree.classList.toggle('line-cross');
-    link.classList.toggle('fade-in');
-})
